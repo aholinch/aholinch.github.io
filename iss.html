@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Cesium with SGP4 in Javascript</title>
+<script src="js/Cesium/Cesium.js"></script>
+<link rel="stylesheet" href="js/Cesium/Widgets/widgets.css" media="screen">
+<script src="js/sgp4.js"></script>
+    <style>
+        .toolbar-left1 {
+            display: block;
+            position: absolute;
+            background-color: #ffffff;
+            opacity: 0.4;
+            top: 25px;
+            left: 25px;
+        }
+        .toolbar-left2 {
+            display: block;
+            position: absolute;
+            background-color: #ffffff;
+            opacity: 0.4;
+            top: 60px;
+            left: 25px;
+        }
+    </style>
+</head>
+<body>
+<div id="cesiumContainer" class="fullWindow">
+</div>
+<div class="toolbar-left1">
+    <button onclick="trackISS();">Track ISS</button>
+</div>
+<div class="toolbar-left2">
+    <button onclick="resetCamera();">Home</button>
+</div>
+<script>
+
+function trackISS()
+{
+    viewer.trackedEntity = entity;
+}
+
+function resetCamera()
+{
+    viewer.trackedEntity = null;
+viewer.homeButton.viewModel.command();
+//var center = Cesium.Cartesian3.fromDegrees(0,0);
+//viewer.camera.lookAt(center, new Cesium.Cartesian3(0.0, 0.0, 40000000.0));
+}
+
+//Generate a random circular pattern with varying heights.
+function computeTLEPosition(tle, D1, D2, dt) {
+    var property = new Cesium.SampledPositionProperty(Cesium.ReferenceFrame.INERTIAL,0);
+    var t = D1.getTime();
+    var t2 = D2.getTime();
+    var d = null;
+    var rv = null;
+    var time = null;
+    var position = null;
+    while(t <= t2)
+    {
+        d = new Date(t);
+        rv = tle.getRVForDate(d);
+        time = Cesium.JulianDate.fromDate(d)
+        position = Cesium.Cartesian3.fromElements(1000*rv[0][0],1000*rv[0][1],1000*rv[0][2]);
+        //console.log(time + "\t" + position);
+        property.addSample(time, position);
+        t+=dt;
+    }
+    //property.referenceFrame = Cesium.ReferenceFrame.INERTIAL;
+    property.setInterpolationOptions({
+            interpolationDegree : 5,
+            interpolationAlgorithm : Cesium.LagrangePolynomialApproximation
+        });
+    return property;
+}
+
+
+var viewer = new Cesium.Viewer('cesiumContainer', {
+  imageryProvider : Cesium.createTileMapServiceImageryProvider({
+    url : Cesium.buildModuleUrl('Assets/Textures/NaturalEarthII')
+  }),
+  baseLayerPicker : false,
+  geocoder : false
+});
+var line1 = "1 25544U 98067A   19018.83636545  .00016717  00000-0  10270-3 0  9006";
+var line2 = "2 25544  51.6414  24.0608 0004702 283.2659  76.7968 15.53158051 32047";
+line1="1 25544U 98067A   19020.12321084  .00016717  00000-0  10270-3 0  9022";
+line2="2 25544  51.6390  17.6496 0004751 282.6517  77.4104 15.53182579 32247";
+line1="1 25544U 98067A   19026.76183146  .00002753  00000-0  50438-4 0  9995";
+line2="2 25544  51.6426 344.6002 0004730 318.6324 105.3120 15.53188668153288";
+
+var tle = new TLE(line1,line2);
+
+var D1 = new Date(Date.now()-3*86400*1000);
+var D2 = new Date(Date.now()+3*86400*1000);
+//var D1 = new Date(tle.epoch.getTime()-3*86400*1000);
+//var D2 = new Date(tle.epoch.getTime()+3*86400*1000);
+//var D1 = new Date(tle.epoch.getTime()-86400*1000);
+//var D2 = new Date(tle.epoch.getTime()+86400*1000);
+//var D1 = new Date(tle.epoch.getTime()-12000*1000);
+//var D2 = new Date(tle.epoch.getTime()+12000*1000);
+
+console.log(D1 + "\t" + D2);
+
+//Set bounds of our simulation time
+var start = Cesium.JulianDate.fromDate(D1);
+var stop = Cesium.JulianDate.fromDate(D2);
+var now = Cesium.JulianDate.fromDate(new Date(Date.now()));
+
+//Make sure viewer is at the desired time.
+viewer.clock.startTime = start.clone();
+viewer.clock.stopTime = stop.clone();
+viewer.clock.currentTime = now.clone();
+viewer.clock.clockRange = Cesium.ClockRange.LOOP_STOP; //Loop at the end
+viewer.clock.multiplier = 10;
+//Set timeline to simulation bounds
+viewer.timeline.zoomTo(start, stop);
+
+
+//Compute the entity position property.
+var position = computeTLEPosition(tle,D1,D2,300000);
+
+//Actually create the entity
+var entity = viewer.entities.add({
+    //Set the entity availability to the same interval as the simulation time.
+    availability : new Cesium.TimeIntervalCollection([new Cesium.TimeInterval({
+        start : start,
+        stop : stop
+    })]),
+    //Use our computed positions
+    position : position,
+    //Show the path as a pink line sampled in 1 second increments.
+    path : {
+        resolution : 1,
+        leadTime: 5400,
+        trailTime: 5400,
+        material : new Cesium.PolylineGlowMaterialProperty({
+            glowPower : 0.3,
+            color : Cesium.Color.RED
+        }),
+        width : 2
+    },
+    billboard : {
+      scale:2,
+      image:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADJSURBVDhPnZHRDcMgEEMZjVEYpaNklIzSEfLfD4qNnXAJSFWfhO7w2Zc0Tf9QG2rXrEzSUeZLOGm47WoH95x3Hl3jEgilvDgsOQUTqsNl68ezEwn1vae6lceSEEYvvWNT/Rxc4CXQNGadho1NXoJ+9iaqc2xi2xbt23PJCDIB6TQjOC6Bho/sDy3fBQT8PrVhibU7yBFcEPaRxOoeTwbwByCOYf9VGp1BYI1BA+EeHhmfzKbBoJEQwn1yzUZtyspIQUha85MpkNIXB7GizqDEECsAAAAASUVORK5CYII="
+    }
+});
+
+</script>
+
+</body>
+</html>

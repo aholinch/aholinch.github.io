@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>HEALPix in Cesium</title>
+<script src="js/Cesium/Cesium.js"></script>
+<link rel="stylesheet" href="js/Cesium/Widgets/widgets.css" media="screen">
+<script src="js/hp2.js"></script>
+    <style>
+        .toolbar-left1 {
+            display: block;
+            position: absolute;
+            background-color: #ffffff;
+            opacity: 0.4;
+            top: 25px;
+            left: 25px;
+        }
+        .toolbar-left2 {
+            display: block;
+            position: absolute;
+            background-color: #ffffff;
+            opacity: 0.4;
+            top: 60px;
+            left: 25px;
+        }
+        .toolbar-left3 {
+            display: block;
+            position: absolute;
+            background-color: #ffffff;
+            opacity: 0.4;
+            top: 95px;
+            left: 25px;
+        }
+        .toolbar-left4 {
+            display: block;
+            position: absolute;
+            background-color: #ffffff;
+            opacity: 0.4;
+            top: 130px;
+            left: 25px;
+        }
+        .toolbar-left5 {
+            display: block;
+            position: absolute;
+            background-color: #ffffff;
+            opacity: 0.4;
+            top: 165px;
+            left: 25px;
+        }
+    </style>
+</head>
+</head>
+<body>
+<div id="cesiumContainer" class="fullWindow">
+</div>
+<div class="toolbar-left1">
+    <button onclick="pick0();">HEALPix Order 0</button>
+</div>
+<div class="toolbar-left2">
+    <button onclick="pick1();">HEALPix Order 1</button>
+</div>
+<div class="toolbar-left3">
+    <button onclick="pick2();">HEALPix Order 2</button>
+</div>
+<div class="toolbar-left4">
+    <button onclick="pick3();">HEALPix Order 3</button>
+</div>
+<div class="toolbar-left5">
+    <button onclick="pick4();">HEALPix Order 4</button>
+</div>
+<script>
+
+var viewer = new Cesium.Viewer('cesiumContainer', {
+  imageryProvider : Cesium.createTileMapServiceImageryProvider({
+    url : Cesium.buildModuleUrl('Assets/Textures/NaturalEarthII')
+  }),
+  baseLayerPicker : false,
+  geocoder : false
+});
+
+var polylines = null;
+
+var polylines0 = gethp0_10();
+
+// set to order 0 by default
+polylines = polylines0;
+
+/*
+polylines.add({
+  positions : Cesium.Cartesian3.fromDegreesArray([
+    -73.10, 37.57,
+    -75.02, 36.53,
+    -78.50, 33.14,
+    -78.12, 23.46]),
+  width : 4
+});
+*/
+
+
+viewer.scene.primitives.add(polylines);
+
+function pick0()
+{
+  viewer.scene.primitives.remove(polylines);
+  polylines = gethp0_10();
+  viewer.scene.primitives.add(polylines);
+}
+
+function pick1()
+{
+  viewer.scene.primitives.remove(polylines);
+  polylines = gethp1_10();
+  viewer.scene.primitives.add(polylines);
+}
+
+function pick2()
+{
+  viewer.scene.primitives.remove(polylines);
+  polylines = gethp2_10();
+  viewer.scene.primitives.add(polylines);
+}
+
+function pick3()
+{
+  viewer.scene.primitives.remove(polylines);
+  polylines = gethp3_5();
+  viewer.scene.primitives.add(polylines);
+}
+
+function pick4()
+{
+  viewer.scene.primitives.remove(polylines);
+  polylines = gethp4_2();
+  viewer.scene.primitives.add(polylines);
+}
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- W3 CSS templates are amazing, check them out https://www.w3schools.com/w3css/default.asp -->
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><title>Cesium Examples</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-red.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+<style>
+body,h1,h2,h3,h4,h5 {font-family: "Poppins", sans-serif}
+body {font-size:16px;}
+.w3-half img{margin-bottom:-6px;margin-top:16px;opacity:0.8;cursor:pointer}
+.w3-half img:hover{opacity:1}
+</style>
+</head>
+<body>
+
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-theme w3-collapse w3-top w3-large w3-padding" style="z-index: 3; width: 300px; font-weight: bold; display: none;" id="mySidebar"><br>
+  <a href="javascript:void(0)" onclick="w3_close()" class="w3-button w3-hide-large w3-display-topleft" style="width:100%;font-size:22px">Close Menu</a>
+  <div class="w3-container">
+    <h3 class="w3-padding-64"><b>CesiumJS</b></h3>
+  </div>
+  <div class="w3-bar-block">
+    <a href="#" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Home</a> 
+    <a href="index.html" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Return to Main</a> 
+  </div>
+</nav>
+
+<!-- Top menu on small screens -->
+<header class="w3-container w3-top w3-hide-large w3-theme w3-xlarge w3-padding">
+  <a href="javascript:void(0)" class="w3-button w3-theme w3-margin-right" onclick="w3_open()">☰</a>
+  <span>Cesium</span>
+</header>
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor: pointer; display: none;" title="close side menu" id="myOverlay"></div>
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:340px;margin-right:40px">
+
+  <!-- Header -->
+  <div class="w3-container" style="margin-top:80px" id="intro">
+    <h1 class="w3-jumbo"><b>CesiumJS</b></h1>
+    <p>AGI's <a href="https://cesiumjs.org" target="_cesiumjs">CesiumJS &#x1f517</a> library provides a 3D globe and map for displaying geospatial information.  It can also display time based simulations.  In the examples below, I have cut out a few features.  If you visit their website you can interact with their tutorials that show how to load textures from other locations like a Bing map server.  My examples use the very nice to look at Natural Earth texture, but only at a single resolution, so detail will not improve by zooming.  In a production setting or by adding a Bing API key, you can connect to map and terrain servers that provide much more resolution.</p>
+    <h1 class="w3-xxxlarge w3-text-theme"><b>Orbits</b></h1>
+    <hr style="width:100px;border:5px solid" class="w3-round w3-border-theme">
+    <div class="w3-cell-row">
+      <div class="w3-cell w3-padding-small">
+        <a href="iss.html" target="_blank">
+        <img src="images/iss.png" class="w3-round" width="300" alt="Cesium ISS"> 
+        </a>
+      </div>
+      <div class="w3-cell-top">
+        <p>In addtion to 3D globes and maps, the framework also understands cartesian coordinates.  This is actually the main output of the SGP4 orbit propagator.  We can use the javascript implementation of SGP4 that I ported to simulate the orbit of the International Space Station (ISS) and display it in a 3D simulation.  Click <a href="iss.html" target="_iss">here &#x1f517</a> to see it.  Click the "Track ISS" button in the upper right to fly along with the space station.  
+        </p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- geo -->
+  <div class="w3-container" id="geo" style="margin-top:75px">
+    <h1 class="w3-xxxlarge w3-text-theme"><b>HEALPix</b></h1>
+    <hr style="width:100px;border:5px solid" class="w3-round w3-border-theme">
+    <div class="w3-cell-row">
+      <div class="w3-cell w3-padding-small">
+        <a href="cesiumhp.html" target="_blank">
+        <img src="images/ceshp.png" class="w3-round" width="300" alt="Cesium ISS"> 
+        </a>
+      </div>
+      <div class="w3-cell-top">
+        <p>The <a href="https://cesiumjs.org" target="_cesiumjs">CesiumJS &#x1f517</a> library has two different methods of supporting geographic objects, either as entities or primitives.  A very common primitive in many frameworks is the polyline.  By generating a polyline collection of HEALPix pixel outlines, I can show the grid on the Cesium globe.  Click <a href="cesiumhp.html" target="_ceshp">here &#x1f517</a> to display HEALPix outlines.  You can click the buttons on the left to display each of the first four orders individually.
+        </p>
+      </div>
+    </div>
+  </div>
+  </div>
+  
+  
+<!-- End page content -->
+</div>
+
+
+<script>
+// Script to open and close sidebar
+function w3_open() {
+    document.getElementById("mySidebar").style.display = "block";
+    document.getElementById("myOverlay").style.display = "block";
+}
+ 
+function w3_close() {
+    document.getElementById("mySidebar").style.display = "none";
+    document.getElementById("myOverlay").style.display = "none";
+}
+
+var slideIndex = 0;
+carousel();
+
+function carousel() {
+    var i;
+    var x = document.getElementsByClassName("mySlides");
+    for (i = 0; i < x.length; i++) {
+      x[i].style.display = "none";
+    }
+    slideIndex++;
+    if (slideIndex > x.length) {slideIndex = 1}
+    x[slideIndex-1].style.display = "block";
+    setTimeout(carousel, 2000); // Change image every 2 seconds
+}
+</script>
+
+
+</body>
+</html>

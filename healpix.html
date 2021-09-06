@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- W3 CSS templates are amazing, check them out https://www.w3schools.com/w3css/default.asp -->
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><title>HEALPix Examples</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-red.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+<style>
+body,h1,h2,h3,h4,h5 {font-family: "Poppins", sans-serif}
+body {font-size:16px;}
+.w3-half img{margin-bottom:-6px;margin-top:16px;opacity:0.8;cursor:pointer}
+.w3-half img:hover{opacity:1}
+</style>
+</head>
+<body>
+
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-theme w3-collapse w3-top w3-large w3-padding" style="z-index: 3; width: 300px; font-weight: bold; display: none;" id="mySidebar"><br>
+  <a href="javascript:void(0)" onclick="w3_close()" class="w3-button w3-hide-large w3-display-topleft" style="width:100%;font-size:22px">Close Menu</a>
+  <div class="w3-container">
+    <h3 class="w3-padding-64"><b>HEALPix</b></h3>
+  </div>
+  <div class="w3-bar-block">
+    <a href="#" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Home</a> 
+    <a href="#intro" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Introduction</a> 
+    <a href="#geo" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Geospatial Analysis</a> 
+    <a href="#astro" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Astronomy</a> 
+    <a href="#links" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Links</a> 
+    <a href="index.html" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Return to Main</a> 
+  </div>
+</nav>
+
+<!-- Top menu on small screens -->
+<header class="w3-container w3-top w3-hide-large w3-theme w3-xlarge w3-padding">
+  <a href="javascript:void(0)" class="w3-button w3-theme w3-margin-right" onclick="w3_open()">☰</a>
+  <span>HEALPix</span>
+</header>
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor: pointer; display: none;" title="close side menu" id="myOverlay"></div>
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:340px;margin-right:40px">
+
+  <!-- Header -->
+  <div class="w3-container" style="margin-top:80px" id="intro">
+    <h1 class="w3-jumbo"><b>HEALPix</b></h1>
+    <h1 class="w3-xxxlarge w3-text-theme"><b>Introduction</b></h1>
+    <hr style="width:100px;border:5px solid" class="w3-round w3-border-theme">
+    <p>Various schemes for decomposing a sphere into a set of pixels exist.  I have been working with HEALPix which uses equal-area quadilaterals.  The HEALPix acronym comes from <b>H</b>ierarchical <b>E</b>qual <b>A</b>rea iso<b>L</b>atitude <b>Pix</b>elization.  In addition to providing equal area cells for pixels, the scheme also allows you to easily decompose geospatial data into simple one dimensional arrays.  At resolution 0 you need 12 pixels to hold the data.  48 at resolution 1, 192 as resolution 2, etc.  The images below automatically step through resolutions 0 through 5.</p>
+    <img class="mySlides" src="images/hpc00lines.png" width="500"/>
+    <img class="mySlides" src="images/hpc01lines.png" width="500"/>
+    <img class="mySlides" src="images/hpc02lines.png" width="500"/>
+    <img class="mySlides" src="images/hpc03lines.png" width="500"/>
+    <img class="mySlides" src="images/hpc04lines.png" width="500"/>
+    <img class="mySlides" src="images/hpc05lines.png" width="500"/>
+    <p>The 2D projection shows exaggerated shapes near the poles.  This is correct.  The equal area shape is intended for the 3D surface of a sphere.  I have used the <a class="w3-hover-theme" target="_blank" href="https://threejs.org/">Three.js</a> library to create a zoomable/pannable sphere with HEALPix boundaries. You can view the 3D model <a class="w3-hover-theme" target="_blank" href="hp3js.html">here &#x1f517</a>.  Click the buttons in the upper left to switch between HEALPix resolutions.  The controls in Three.js allow you to left click to rotate and scroll to zoom.</p>
+  </div>
+  
+  <!-- geo -->
+  <div class="w3-container" id="geo" style="margin-top:75px">
+    <h1 class="w3-xxxlarge w3-text-theme"><b>Geospatial Analysis</b></h1>
+    <hr style="width:100px;border:5px solid" class="w3-round w3-border-theme">
+    <p>The HEALPix scheme can be used to create equal-area bins to measure quantities on the surface of the earth.  The image below is a NASA composite image of night lights called <a class="w3-hover-theme" target="_blank" href="https://earthobservatory.nasa.gov/features/NightLights">Black Marble</a>.  The lights in the image are a good proxy for both population and economic activity.</p>
+    <p><img src="images/small_marble.jpg" class="w3-image" /></p>
+    <p>To test the relationship between population and night lights, we can create a pixelization at HEALPix level 10.  In each pixel or bin we can count the total population. For our source of population data we use the locations from the <a class="w3-hover-theme" target="_blank" href="https://www.geonames.org">GeoNames</a>.  Each location has a latitude and longitude which we can convert to a HEALPix pixel index.  We can create an array of size 12582912 for level 10 data.  Each index in the array holds the total population for locations in that HEALPix cell.  After adding up all the population values, we can compute the log base 10 population in each cell.  If we then plot our HEALPix data in 2D we get the following image.</p>
+    <p><a target="_blank" href="popexample.html"><img src="images/hp10pop_small.png" class="w3-image" /></a></p>
+    <p>You can view the Black Marble gray scale image and our HEALPix population count in 3D by clicking <a class="w3-hover-theme" target="_blank" href="popexample.html">here &#x1f517</a>. The population data is not all from the same year. Some locations are decades old.  However, the log of population seems to be an OK match to the lights.  Economics plays a role as well.  North Korea is a famous example of a high population but low level of lighting.  If the night-light data were reprojected to HEALPix cells, we could calculate the correlation between the light intensity and the log of popluation directly.  It would be as easy as computing the correlation between two 1D arrays.  If the data is computed at different resolutions, no problem.  The higher resoluation can be very easily downsampled to match the other.  Each pixel retains its equal area properties.  This makes geospatial correlations very easy to perform.</p>
+    <p>The animation below shows the effect of increasing the resolution of the HEALPix grid.  Clicking on the image will bring you to a bigger version of the image.  The structure results from binning data that was originally a set of points.</p>
+    <p><a target="_blank" href="images/hppopfull.gif"><img src="images/hppopsmall.gif" class="w3-image" width="500"/></a></p>
+    <p><a class="w3-hover-theme" target="_blank" href="popexample.html">HEALPix Population &#x1f310;</a></p>    
+  </div>
+  
+  <!-- Astronomy -->
+  <div class="w3-container" id="astro" style="margin-top:75px">
+    <h1 class="w3-xxxlarge w3-text-theme"><b>Astronomy</b></h1>
+    <hr style="width:100px;border:5px solid" class="w3-round w3-border-theme">
+    <p>The HEALPix format was originally designed for use with astronomy datasets, especially whole-sky data.  Earlier this year, the ESA GAIA project released parallax data on over 1.6 billion stars in the Milky Way.  They also released as subset of 7 million stars with radial velocities as well.  If we bin the location of the stars using Right Ascension and Declination for the HEALPix coordinates we get the image below.</p>
+    <p><img class="w3-image" src="images/hp_stars_small.png"/></p>
+    <p>The galactic coordinate system uses the plane and center of the Milky Way to define two angles.  Using those with HEALPix gives the following image.</p>
+    <p><img class="w3-image" src="images/hp_starsgal_small.png"/></p>
+    <p>The previous two images simply counted the number of stars in each bin.  They also exhibit some stripes and box artifacts caused by the way the survey was divided up in RA/Dec coordinates.  The GAIA data set also includes the flux, or amount of light, from each star.  We can add up all the light in each part of the sky and put that in a HEALPix bin.</p>
+    <p><img class="w3-image" src="images/hp_starsgalflux_small.png"/></p>
+    <p>We can compare this to an <a class="w3-hover-theme" target="_blank" href="https://apod.nasa.gov/apod/ap110520.html">Astronomy Picture Of the Day by Nick Risinger</a>. His image is a mosaic showing the entire Milky Way.</p>
+    <p><a target="_blank" href="https://apod.nasa.gov/apod/ap110520.html"><img class="w3-image" src="images/3000_CC_BY-NC.jpg" width="500"/></a></p>
+    <p>This subset of GAIA is biased towards relatively closer stars, but the main size shape, and dust features of the Milky Way are accurately recreated. You can view these images in a Three.js globe <a class="w3-hover-theme" target="_blank" href="stars.html">here &#x1f517</a>. The Small and Large Magellanic Clouds are visible in the full 1.6 billion star GAIA data set, but do not show up in the 7 million star subset.</p>
+    <p>We can also plot the density of galaxies measured by the <a class="w3-hover-theme" target="_blank" href="https://old.ipac.caltech.edu/2mass/releases/allsky/">2MASS</a> all sky survey.  The distribution of galaxies in the sky gives information about the large scale structure of the universe.  In the image below we see signs of the massive voids between strings and clumps of galaxies.</p>
+    <p><img class="w3-image" src="images/hp_gals09_small.png"/></p>
+    <p><a class="w3-hover-theme" target="_blank" href="stars.html">HEALPix Astronomy &#x1f310;</a></p>    
+  </div>
+  
+  <!-- Links -->
+  <div class="w3-container" id="links" style="margin-top:75px">
+    <h1 class="w3-xxxlarge w3-text-theme"><b>External Links</b></h1>
+    <hr style="width:100px;border:5px solid" class="w3-round w3-border-theme">
+    <p>Visit these links for more information about HEALPix and software implementations.</p>
+    <ul>
+      <li><a target="_blank" href="https://healpix.jpl.nasa.gov/">JPL</a></li>
+      <li><a target="_blank" href="https://astropy-healpix.readthedocs.io">Astropy</a></li>
+      <li><a target="_blank" href="https://healpix.sourceforge.io/">Source Forge</a></li>
+      <li><a target="_blank" href="https://ui.adsabs.harvard.edu/abs/2005ApJ...622..759G/abstract">HEALPix ApJ</a></li>
+      <li><a target="_blank" href="https://ui.adsabs.harvard.edu/abs/2007MNRAS.381..865C/abstract">HEALPix MNRAS</a></li>
+    </ul> 
+  </div>
+
+  
+<!-- End page content -->
+</div>
+
+
+<script>
+// Script to open and close sidebar
+function w3_open() {
+    document.getElementById("mySidebar").style.display = "block";
+    document.getElementById("myOverlay").style.display = "block";
+}
+ 
+function w3_close() {
+    document.getElementById("mySidebar").style.display = "none";
+    document.getElementById("myOverlay").style.display = "none";
+}
+
+var slideIndex = 0;
+carousel();
+
+function carousel() {
+    var i;
+    var x = document.getElementsByClassName("mySlides");
+    for (i = 0; i < x.length; i++) {
+      x[i].style.display = "none";
+    }
+    slideIndex++;
+    if (slideIndex > x.length) {slideIndex = 1}
+    x[slideIndex-1].style.display = "block";
+    setTimeout(carousel, 2000); // Change image every 2 seconds
+}
+</script>
+
+
+</body>
+</html>
