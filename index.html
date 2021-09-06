@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- W3 CSS templates are amazing, check them out https://www.w3schools.com/w3css/default.asp -->
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><title>Anthony's Portfolio</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-indigo.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+<style>
+body,h1,h2,h3,h4,h5 {font-family: "Poppins", sans-serif}
+body {font-size:16px;}
+.w3-half img{margin-bottom:-6px;margin-top:16px;opacity:0.8;cursor:pointer}
+.w3-half img:hover{opacity:1}
+</style>
+</head>
+<body>
+
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-theme w3-collapse w3-top w3-large w3-padding" style="z-index: 3; width: 300px; font-weight: bold; display: none;" id="mySidebar"><br>
+  <a href="javascript:void(0)" onclick="w3_close()" class="w3-button w3-hide-large w3-display-topleft" style="width:100%;font-size:22px">Close Menu</a>
+  <div class="w3-container">
+    <h3 class="w3-padding-64"><b>Anthony<br>Holincheck</b></h3>
+  </div>
+  <div class="w3-bar-block">
+    <a href="#" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Home</a> 
+    <a href="#intro" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Introduction</a> 
+    <a href="#showcase" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Showcase</a> 
+    <a href="#research" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Research</a> 
+    <a href="#experience" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Professional Experience</a> 
+    <a href="#education" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Education</a> 
+    <a href="#publications" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Publications</a>
+  </div>
+</nav>
+
+<!-- Top menu on small screens -->
+<header class="w3-container w3-top w3-hide-large w3-theme w3-xlarge w3-padding">
+  <a href="javascript:void(0)" class="w3-button w3-theme w3-margin-right" onclick="w3_open()">☰</a>
+  <span>Anthony Holincheck</span>
+</header>
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor: pointer; display: none;" title="close side menu" id="myOverlay"></div>
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:340px;margin-right:40px">
+
+  <!-- Header -->
+  <div class="w3-container" style="margin-top:80px" id="intro">
+    <h1 class="w3-jumbo"><b>Data Scientist / Software Architect</b></h1>
+    <h1 class="w3-xxxlarge w3-text-theme"><b>Introduction</b></h1>
+    <hr style="width:100px;border:5px solid" class="w3-round w3-border-theme">
+    <p>I've been a data analyst and professional software engineer for over 20 years.  
+I do full life-cycle development from architecture, design, implementation, to operations.  I specialize in systems for aggregating and analyzing complex data sets.
+My education background is physics and data science with a focus on orbit dynamics.  I construct physics-based models and simulations as well as perform statistical
+analysis of the results.  I'm very good at rapid prototyping and data engineering to support extract, transform, and load (ETL) for numeric data and text in both structured and
+unstructured formats.  In addition to basic statistical analysis, I have experience coding data science algorithms from scratch including clustering, regression, genetic algorithms,
+and principal component analysis.  
+</p>
+    <p>Feel free to visit my <a class="w3-hover-theme" href="https://github.com/aholinch" target="_blank">GitHub page &#x1f517;</a>.</p>
+  </div>
+  
+  <!-- Showcase -->
+  <div class="w3-container" id="showcase" style="margin-top:75px">
+    <h1 class="w3-xxxlarge w3-text-theme"><b>Showcase</b></h1>
+    <hr style="width:100px;border:5px solid" class="w3-round w3-border-theme">
+    <h2 class="w3-large w3-text-theme"><b>nograph  &#x1F500;</b></h2>
+    <p>This is a personal project based on the idea of building graph databases on top of NoSQL backends.  I have implemented a very light-weight engine for doing small-scale (up-to several million nodes and edges) graph databases that can run on personal hardware.  For more information check out the <a class="w3-hover-theme" href="http://www.nograph.org" target="_blank">nograph &#x1f517;</a> homepage or the <a class="w3-hover-theme" href="https://github.com/aholinch/nograph" target="_blank">GitHub repository &#x1f517;</a>.</p>
+    <h2 class="w3-large w3-text-theme"><b>HEALPix &#x1f310;</b></h2>
+    <div class="w3-cell-row">
+      <div class="w3-cell w3-padding-small">
+        <a href="healpix.html">
+        <img src="images/hp.png" class="w3-round" width="100" alt="HEALPix"> 
+        </a>
+      </div>
+      <div class="w3-cell-top">
+        <p>HEALPix stands for Hierarchical Equal Area iso Latitude Pixelation of the sphere.  The pixelation (or pixelization) begins with 12 base pixes in three bands: two polar and one equatorial.  Each base pixel can be sub-divided into 4 equal area sub pixels recursively.</p>
+      </div>
+    </div>
+    <h2 class="w3-large w3-text-theme"><b>SGP4 &#x1f6f0;</b></h2>
+    <p>If you operate a satellite or are involved in space situational awareness (SSA) you know about two line element sets (TLEs).  This is the most common source of data
+    for the orbits of artificial space objects in near earth space.  Despite the limitations of the data format (limited precision, no covariance), the fact that it is freely
+    provided by the US Government and for almost all objects makes working with this data incredibly useful.  The orbit dynamics theory, and related computer source code, needed
+    to work with data in this format is known as Simplified General Perturbations 4 (SGP4).  David Vallado, T.S. Kelso, and others at <a class="w3-hover-theme" target="_blank" href="http://www.centerforspace.com/">CSSI</a>  have worked very hard to provide modernized
+    software implementations (with bug fixes and amazing test cases) for SGP4.  To demonstrate my familiarity with this propagator and ability to work in multiple computer languages
+    I ported their code from C to several other languages.  The list of languages is up to: C, C++, C#, Fortran 90, Java, Javascript, Matlab/Octave, Libre/Open Office BASIC, Python 2/3, R, and Ruby. I have a repository on GitHub if you want to get the <a class="w3-hover-theme" target="_blank" href="https://github.com/aholinch/sgp4">code &#x1f517;</a>.</p>
+    <h2 class="w3-large w3-text-theme"><b>CesiumJS &#x1f30e;</b></h2>
+    <div class="w3-cell-row">
+      <div class="w3-cell w3-padding-small">
+        <a href="cesium.html">
+        <img src="images/iss.png" class="w3-round" width="100" alt="Cesium ISS"> 
+        </a>
+      </div>
+      <div class="w3-cell-top">
+    <p>AGI's open source 3D globe and in-browser GIS framework is an amazing tool.  I'm not yet an expert, but I hope more projects adopt it for building intuitive displays of geospatial
+    and time-based data.  It is well suited for displaying data in HEALPix bins.  Also, using the javascript version of SGP4 I ported, you can fly satellites in 
+    the 3D environment offered by Cesium.</p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Research -->
+  <div class="w3-container" id="research" style="margin-top:75px">
+    <h1 class="w3-xxxlarge w3-text-theme"><b>Research &#x269B</b></h1>
+    <hr style="width:100px;border:5px solid" class="w3-round w3-border-theme">
+    <h2 class="w3-large w3-text-theme"><b>Orbit Dynamics &#x2609; &#x2604;</b></h2>
+    <p>All three of my academic degrees have included a research project related to orbit dynamics.  For my undergraduate degree I studied the binary pulsar PSR 1913+16.  In addition to simulating the orbits of hypothetical exoplanets in this binary system, my force model also had to account for General Relativity.  For my master's research project I implemented a symplectic integrator to study resonances in the asteroid belt.  These resonances, primarily with the orbit of Jupiter, will cause asteroid orbits at certain locations to become elliptical over time eventually leading to their ejection from the belt.  This is the primary cause of the Kirkwood gaps. For my PhD, I studied the orbits of interacting galaxies.  I built a tool used by thousands of Citizen Scientist volunteers from the Galaxy Zoo project.  We were able to determine the relative orbits of galaxies by matching simulations to current images of their post interaction morphologies. </p>
+    <p>John Wallin's restricted three-body code is very convenient for doing parameter studies of the orbits of interacting galaxies.  By setting the origin of the coordinate system
+    at the center of one of the galaxies, it greatly simplifies the task of determining the proper viewing angles for reconstructing merger morphology.  His code was originally written
+in FORTRAN.  He later added a new potential to better simulate dark matter halos.  Both potentials were ported by me from FORTRAN to Java.  I was then able to port it to javascript.  You can run restricted three-body simulations of interacting galaxies in your browser.  Click the link to re-run the best fit models from the Galaxy Zoo: Mergers project <a class="w3-hover-theme" href="http://aholinch.github.io/gzmdata/sim/index.html" target="_blank">JSPAM in the browser &#x1f517</a>.
+    <h2 class="w3-large w3-text-theme"><b>Machine Learning with Computer Vision &#x1F916; &#x1F441;</b></h2>
+    <p>The research group I was part of during my PhD research was attempting to use computer vision and machine learning to automatically rate simulation outputs to determine if a match
+    had been found for specific systems of interacting galaxies.  Using the current best available fitness function in the literature, we were able to easily identify exact or nearly
+    exact matches.  However the function had a very, very narrow convergence radius and even genetic algorithms failed to reliably optimize the simulation parameters.</p>
+    <p>To overcome this, our group manually tried many different feature extraction methods in the OpenCV library to try to improve the fitness function but were ultimately unsuccessful.</p>
+    <p>The Galaxy Zoo: Mergers project involved the help of almost 10000 citizen scientist volunteers who reviewed millions of simulations.  Using their ratings we were able to score simulation
+    output to establish a smoother, albeit empirical, fitness function.  With each simulation output having been assigned a rating we were able to attempt the machine learning problem again
+    as a supervised learning exercise.</p>
+    <p>We used Lior Shamir's <a class="w3-hover-theme" target="_blank" href="http://people.cs.ksu.edu/~lshamir/downloads/ImageClassifier/">WNDCHRM software &#x1f517</a> to attempt to classify the simulation results into 4 different classes going from bad to good fit.  The WNDCHRM software generates almost 3000 
+    features for each image and uses them to classify the data.  In addition to classifying the data, the software computes a Fisher score to determine which features offer the most information
+    gain when separating the input images into classes.  Using the Fisher scores we were able to identify a small number of the 1000s of total features that were used as the basis of a new
+    fitness function.  The revised function was able to smooth out the fitness function and increase the convergence radius for our genetic algorithm. </p>
+    <h2 class="w3-large w3-text-theme"><b>Simple Regression &#x1F4C8;</b></h2>
+    <p>One of my hobbies is sports analytics.  A lot of useful analysis can be done with simple regression analysis, either linear or logisitic. With all machine learning projects it is important to have a baseline model for comparison.  Very often, simple regression can explain much of the variance.  This establishes an important benchmark for comparing model results from more complicated algorithms and extensive feature sets.  The complexity of an advanced model needs to be justified by an improvement over simple results before trying to implement in production. </p>
+    <ul>
+    <li>Logistic regression for field goal percentage</li>
+    <li>Linear and Logistic regression for NCAA basketball</li>
+    </ul>
+  </div>
+  
+  <!-- Experience -->
+  <div class="w3-container" id="experience" style="margin-top:75px">
+    <h1 class="w3-xxxlarge w3-text-theme"><b>Professional Experience &#x1F4BC;</b></h1>
+    <hr style="width:100px;border:5px solid" class="w3-round w3-border-theme">
+    <h2 class="w3-large w3-text-theme"><b>Software Development &#x1F4BB;</b></h2>
+    <p>Almost all of my clients require non-disclosure agreements in order for me to access their proprietary data.  In compliance with those agreements I will discuss projects only in general terms with a focus on the skills that I applied to provide solutions in each case.</p>
+    <ul>
+    <li>Delivered code for production in the following languages: Java, javascript, C/C++, python, ruby, fortran, matlab</li>
+    </ul>
+    <h2 class="w3-large w3-text-theme"><b>Information System Security &#x1F512;</b></h2>
+    <p>Most of my clients have required custom authentication and authorization frameworks.  Over my career I have evolved these capabilities from simple username and passwords stored in a 
+    database to mutual PKI authentication with client certs and custom LDAP directories.  In addition to building the security layer in the software, I have extensive experience
+    documenting security controls.  I have prepared documentation that supported multiple software systems through their entire security assessment and authorization process (A&A) based
+    on US federal government standards.  The most recent standards for security controls that I have worked with is an extension of NIST 800-53.</p>
+    <ul>
+    <li>Implemented role-based access control for J2EE containers and custom ThreadLocal implementations.</li>
+    <li>Custom authentication and Realms for Tomcat, JBoss, Jetty, Apache HTTP, Spring Security, and JAAS plugins.</li>
+    <li>Experience with username/password stored in DB, LDAP, Kerberos, and custom PKI backends.</li>
+    <li>Experience with credential management ranging from local encrypted files, java keystores, Microsoft cryptographic store, and AWS.</li>
+    </ul>
+    <h2 class="w3-large w3-text-theme"><b>Teaching / Training &#x1F4DA;</b></h2>
+    <ul>
+    <li>I was a laboratory instructor at George Mason University for 8 years.  I taught one to two lab sections a semester of an Introduction to Astronomy course.</li>
+    <li>For my PhD research project I was responsible for making a detailed online tutorial and training videos to teach citizen science volunteers how to operate the browser-based simulation of interacting galaxies I had coded.</li>
+    <li>For many of my software customers I've made user guides and tutorials as well as conducted small group demonstrations and one-on-one training.  I also implemented an automated tutorial framework for a desktop application that would actually control the user's mouse for each step of the tutorial.</li>
+    </ul>
+  </div>
+  
+  <!-- Education -->
+  <div class="w3-container" id="education" style="margin-top:75px">
+    <h1 class="w3-xxxlarge w3-text-theme"><b>Education &#x1f393;</b></h1>
+    <hr style="width:100px;border:5px solid" class="w3-round w3-border-theme">
+    <ul>
+
+    <li class="w3-padding-small">
+<div class="w3-bar-item">
+<span>PhD Computational Sciences and Informatics</span><br/>
+<span>George Mason University</span>
+</div>
+    </li>
+
+    <li class="w3-padding-small">
+<div class="w3-bar-item">
+<span>MS Applied and Engineering Physics</span> <br/>
+<span>George Mason University</span>
+</div>
+    </li>
+
+    <li class="w3-padding-small">
+<div class="w3-bar-item">
+<span>BS Physics</span> <br/>
+<span>The College of William &amp; Mary</span>
+</div>
+    </li>
+    </ul>
+  </div>
+  
+  <!-- Publications -->
+  <div class="w3-container" id="publications" style="margin-top:75px">
+    <!-- <h1 class="w3-xxxlarge w3-text-theme"><b>Publications &#x1f5ce;</b></h1>-->
+    <h1 class="w3-xxxlarge w3-text-theme"><b>Publications &#128196;</b></h1>
+    <hr style="width:100px;border:5px solid" class="w3-round w3-border-theme">
+    <p>I have had the honor of working with many talented researchers, and we have published our results.  We have also open sourced our research software.</p>
+    <ul>
+    <li>Holincheck, A., & Cathell, J. (2021). SGP4-XP. AMOS 2021 &nbsp; 
+    <li>Cathell, J., & Holincheck, A. (2021). Graph DB. AMOS 2021 &nbsp; 
+    <li>Wallin, J. F., Holincheck, A. J., & Harvey, A. (2016). JSPAM: A restricted three-body code for simulating interacting galaxies. Astronomy and computing, 16, 26-33. &nbsp; 
+<a target="_blank" href="https://ui.adsabs.harvard.edu/#abs/2016A&C....16...26W/abstract">ADS &#x1f517</a> &nbsp;
+<a target="_blank" href="https://arxiv.org/pdf/1511.05041.pdf">arXiv &#x1f517</a></li>
+    <li>Holincheck, A. J., Wallin, J. F., Borne, K., Fortson, L., Lintott, C., Smith, A. M., ... & Parrish, M. (2016). Galaxy Zoo: Mergers–Dynamical models of interacting galaxies. Monthly Notices of the Royal Astronomical Society, 459(1), 720-745. &nbsp; 
+<a target="_blank" href="https://ui.adsabs.harvard.edu/#abs/2016MNRAS.459..720H/abstract">ADS &#x1f517</a> &nbsp;
+<a target="_blank" href="https://arxiv.org/pdf/1604.00435.pdf">arXiv &#x1f517</a></li>
+    <li>Wallin, J. F., Holincheck, A., & Harvey, A. (2015). JSPAM: Interacting galaxies modeller. Astrophysics Source Code Library. &nbsp; <a target="_blank" href="https://ui.adsabs.harvard.edu/#abs/2015ascl.soft11002W/abstract">ADS &#x1f517</a></li>
+    <li>Holincheck, A. (2014, January). A Pipeline for Constructing A Catalog of Multi-Method Models of Interacting Galaxies.  In Bulletin of the American Astronomical Society (Vol. 223, p. 324). &nbsp; <a target="_blank" href="https://ui.adsabs.harvard.edu/#abs/2014AAS...22332402H/abstract">ADS &#x1f517</a></li>
+    <li>Holincheck, A. (2013). A Pipeline for constructing a catalog of multi-method models of interacting galaxies (Doctoral dissertation). &nbsp; <a target="_blank" href="http://mars.gmu.edu/handle/1920/8359">GMU &#x1f517</a></li>
+    <li>Shamir, L., Holincheck, A., & Wallin, J. (2013). Automatic quantitative morphological analysis of interacting galaxies. Astronomy and Computing, 2, 67-73. &nbsp; <a target="_blank" href="https://ui.adsabs.harvard.edu/#abs/2013A&C.....2...67S/abstract">ADS &#x1f517</a> &nbsp;
+<a target="_blank" href="https://arxiv.org/pdf/1309.4014.pdf">arXiv &#x1f517</a></li>
+    <li>Wallin, J., Holincheck, A., Borne, K., Lintott, C., Smith, A., Bamford, S., & Fortson, L. (2010, June). Tasking citizen scientists from Galaxy Zoo to model galaxy collisions. In Galaxy Wars: Stellar Populations and Star Formation in Interacting Galaxies (Vol. 423, p. 217). &nbsp; 
+<a target="_blank" href="https://ui.adsabs.harvard.edu/#abs/2010ASPC..423..217W/abstract">ADS &#x1f517</a> </li>
+    <li>Holincheck, A., Wallin, J., Borne, K., Lintott, C., Smith, A., Bamford, S., & Fortson, L. (2010, June). Tasking Citizen Scientists from Galaxy Zoo to Model Galaxy Collisions: Preliminary Results, Interface, Analysis. In Galaxy Wars: Stellar Populations and Star Formation in Interacting Galaxies (Vol. 423, p. 223). &nbsp; <a target="_blank" href="https://ui.adsabs.harvard.edu/#abs/2010ASPC..423..223H/abstract">ADS &#x1f517</a></li>
+    <li>Holincheck, A., Wallin, J., Borne, K., Lintott, C. J., & Smith, A. (2010, January). Building a catalog of dynamical properties of interacting galaxies in SDSS with the aid of citizen scientists. In Bulletin of the American Astronomical Society (Vol. 42, p. 383). &nbsp; <a target="_blank" href="https://ui.adsabs.harvard.edu/#abs/2010AAS...21543526H/abstract">ADS &#x1f517</a></li>
+    <li>Holincheck, A. J. (1998). An investigation of the orbit of the binary pulsar PSR 1913+16.</li>
+    </ul>
+  </div>
+  
+<!-- End page content -->
+</div>
+
+
+<script>
+// Script to open and close sidebar
+function w3_open() {
+    document.getElementById("mySidebar").style.display = "block";
+    document.getElementById("myOverlay").style.display = "block";
+}
+ 
+function w3_close() {
+    document.getElementById("mySidebar").style.display = "none";
+    document.getElementById("myOverlay").style.display = "none";
+}
+
+// Modal Image Gallery
+function onClick(element) {
+  document.getElementById("img01").src = element.src;
+  document.getElementById("modal01").style.display = "block";
+  var captionText = document.getElementById("caption");
+  captionText.innerHTML = element.alt;
+}
+</script>
+
+
+</body>
+</html>
