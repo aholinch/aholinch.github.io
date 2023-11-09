@@ -1,0 +1,89 @@
+<html>
+<!-- inspired by https://jsfiddle.net/SupunKavinda/vfxdwtpc/1/ -->
+
+<head>
+  <title>BLIP - Bi-Linear Interpolation of Pictures</title>
+  <link rel="stylesheet" href="../style/blip.css" />
+  <script type="text/javascript" src="../js/blip.js"></script>
+</head>
+
+<body onload="enableDnD();">
+<div>
+  <h1>BLIP - Bi-Linear Interpolation of Pictures</h1>
+  <p>The image files DO NOT leave your machine.  There is no "upload" hear.  The browser is given access to a local file to display as an image.</p>
+</div>
+<div id="drop-region">
+  <div class="drop-message">
+    Drag & Drop images
+  </div>
+</div>
+<table border="0">
+<tr>
+<td>
+  <div id="measure">
+  <table border="0">
+  <tr>
+  <td>What does X represent?</td>
+  </tr>
+  <tr>
+  <td><input type="radio" name="xtype" value="generic" checked="true" />Generic Number</td>
+  </tr>
+  <tr>
+  <td><input type="radio" name="xtype" value="mjd" />Date/Day Frac MJD</td>
+  <td><input type="text" name="xtypemjd" value="54000" /></td>
+  </tr>
+  <tr>
+  <td><input type="radio" name="xtype" value="utcdayfrac" />Date/Day Frac UTC</td>
+  <td><input type="text" name="xtypeutcdayfrac" value="2021-01-01" /></td>
+  </tr>
+  <tr>
+  <td><input type="radio" name="xtype" value="utcsec" />Date/Seconds UTC</td>
+  <td><input type="text" name="xtypeutcsec" value="2021-01-01" /></td>
+  </tr>
+  </table>
+  <br />
+  <table border="0">
+  <tr><td>Click Mode</td><td>Pixel</td><td>Value</td></tr>
+  <tr>
+    <td><input type="button" value="Min Y" onclick="setImgMode('miny');" /></td>
+    <td><input type="text" id="minypix" value="0"/>
+    <td><input type="text" id="minyval" value="-20" />
+  </tr>
+  <tr>
+    <td><input type="button" value="Max Y" onclick="setImgMode('maxy');" /></td>
+    <td><input type="text" id="maxypix" value="0"/>
+    <td><input type="text" id="maxyval" value="20" />
+  </tr>
+  <tr>
+    <td><input type="button" value="Min X" onclick="setImgMode('minx');" /></td>
+    <td><input type="text" id="minxpix" value="0"/>
+    <td><input type="text" id="minxval" value="0.5" />
+  </tr>
+  <tr>
+    <td><input type="button" value="Max X" onclick="setImgMode('maxx');" /></td>
+    <td><input type="text" id="maxxpix" value="0"/>
+    <td><input type="text" id="maxxval" value="1" />
+  </tr>
+  <tr>
+    <td><input type="button" value="Measure" onclick="setImgMode('measure');" /></td>
+    <td>Measured Points</td>
+    <td><input type="button" value="Clear" onclick="clearPoints();" /></td>
+  </tr>
+  <tr>
+    <td rowspan="6" colspan="3">
+      <textarea id="measured"></textarea>
+    </td>
+  </tr>
+  </table>
+  </div>
+</td>
+
+<td>
+<div id="image-preview">
+</div>
+</td>
+
+</tr>
+</table>
+</body>
+</html>
