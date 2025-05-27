@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Solar System Visualization</title>
+  <style>
+    body { margin: 0; }
+    canvas { display: block; }
+#checkbox-container {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent white */
+  color: rgb(200,10,10); 
+  padding: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  z-index: 1000; /* Ensure it's above the Three.js canvas */
+  font-family: sans-serif;
+  font-size: 1.5rem;
+}
+
+
+  </style>
+</head>
+<body>
+  <script src="solar_system_objects.js"></script>
+  <script src="planet_orbit.js"></script>
+  <script src="mpc.js"></script>
+  <script src="nea.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <script>
+    var id2object = new Map();
+
+    // Basic Three.js setup
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 20000);
+    const renderer = new THREE.WebGLRenderer();
+
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    // Add orbit controls
+    const controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+    // Simple light setup
+    const ambientLight = new THREE.AmbientLight(0x404040); // Soft white light
+    scene.add(ambientLight);
+
+    const pointLight = new THREE.PointLight(0xffffff, 1, 100);
+    pointLight.position.set(50, 50, 50);
+    scene.add(pointLight);
+
+    camera.position.z = 400;
+
+    // Animation loop
+    function animate() {
+      requestAnimationFrame(animate);
+      controls.update();
+      renderer.render(scene, camera);
+    }
+
+    // Load and process JSON data
+    async function loadData() {
+      const data = ss_data;
+      var scale = 100.0; // 1 AU = 100 pixels
+      // 2. Create the x-axis line (red)
+      const xAxisGeometry = new THREE.BufferGeometry().setFromPoints([
+        new THREE.Vector3(-40*scale, 0, 0),
+        new THREE.Vector3(40*scale, 0, 0)
+      ]);
+      const xAxisMaterial = new THREE.LineBasicMaterial({ color: 0xaaaaaa });
+      const xAxis = new THREE.Line(xAxisGeometry, xAxisMaterial);
+      scene.add(xAxis);
+
+      // 3. Create the y-axis line (green)
+      const yAxisGeometry = new THREE.BufferGeometry().setFromPoints([
+        new THREE.Vector3(0, -40*scale, 0),
+        new THREE.Vector3(0, 40*scale, 0)
+      ]);
+      const yAxisMaterial = new THREE.LineBasicMaterial({ color: 0xaaaaaa });
+      const yAxis = new THREE.Line(yAxisGeometry, yAxisMaterial);
+      scene.add(yAxis);
+      var axes = new Array();
+      axes.push(xAxis);
+      axes.push(yAxis);
+      id2object.set("axes",axes);
+
+      // loop over orbit data and make the lines
+      const orbitdata = ss_orbits;
+      for(var i=0; i<orbitdata.length; i++)
+      {
+        makeOrbit(orbitdata[i].orbit,data[i].color,scale);
+      }
+
+      // add a bunch of asteroids
+      addAsteroids(ss_mpc,scale,'#888888','asteroids');
+
+
+      addAsteroids(ss_nea,scale,'#FF5733','neas');
+
+
+
+      // Process the heliocentric coordinates from the JSON file
+      for (const object of data) { 
+        console.log(object);
+        const geometry = new THREE.SphereGeometry(object.radius, 32, 32);
+        const material = new THREE.MeshBasicMaterial({ color: object.color });
+        const sphere = new THREE.Mesh(geometry, material);
+
+        // Set position based on heliocentric coordinates
+        sphere.position.set(scale*object.rx, scale*object.ry, scale*object.rz);
+
+        scene.add(sphere);
+      }
+    }
+
+    function makeOrbit(orbitArr,colorVal,scale){
+        var len = orbitArr.length;
+        var points = new Array(len+1);
+        var pa = null;
+
+        for(var i=0; i<len; i++)
+        {
+            pa = orbitArr[i];
+            points[i]=new THREE.Vector3(scale*pa[0],scale*pa[1],scale*pa[2]);
+        }
+        points[len]=points[0].clone();
+
+        // Create a line geometry
+        const geometry = new THREE.BufferGeometry().setFromPoints(points);
+
+        // Create a material for the line
+        const material = new THREE.LineBasicMaterial({ color: colorVal });
+
+        // Create the line object
+        const line = new THREE.LineLoop(geometry, material);
+
+        // Add to scene
+        scene.add(line);
+
+        var orbits = id2object.get("orbits");
+        if(orbits == null)
+        {
+            orbits = new Array();
+            id2object.set("orbits",orbits);
+        }
+        orbits.push(line);
+    }
+
+    function addAsteroids(ss_mpc,scale,colorstr,key){
+        var numObj = ss_mpc.length;
+
+        const positions = new Float32Array(numObj * 3);
+        var ind = 0;
+        var arr = null;
+        for (let i = 0; i < numObj; i++) {
+          arr = ss_mpc[i];
+          ind = i*3;
+          positions[ind] = scale*arr[0];
+          positions[ind + 1] = scale*arr[1];
+          positions[ind+ 2] = scale*arr[2];
+        }
+
+        // Create a PointsGeometry
+        const geometry = new THREE.BufferGeometry();
+        geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+        // Create a PointsMaterial with transparency
+        const material = new THREE.PointsMaterial({
+          color: colorstr, // Color
+          size: 2,         // Size of each point
+          transparent: true,
+          opacity: 0.5,    // Alpha value (0 = fully transparent, 1 = fully opaque)
+        });
+
+        // Create the Points object
+        const points = new THREE.Points(geometry, material);
+
+        // Add to scene
+        scene.add(points);
+
+        id2object.set(key,points);
+    }
+
+
+    // Load your JSON data here
+    loadData();
+
+    animate();
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Get all checkboxes
+  const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+  // Loop through each checkbox
+  checkboxes.forEach(checkbox => {
+    // Get the ID of the checkbox
+    const objectId = checkbox.id;
+
+    // Add event listener to toggle object visibility
+    checkbox.addEventListener('change', () => {
+      const object = id2object.get(objectId);
+      if (object) {
+        if(!Array.isArray(object)) {
+          object.visible = checkbox.checked;
+        } else {
+            for(var i=0; i<object.length; i++) object[i].visible = checkbox.checked;
+        }
+      }
+    });
+  });
+});
+  </script>
+
+<div id="checkbox-container">
+  <label>
+    <input type="checkbox" id="asteroids" checked> Asteroids
+  </label>
+  <label>
+    <input type="checkbox" id="neas" checked> Near-Earth Asteroids
+  </label>
+  <label>
+    <input type="checkbox" id="orbits" checked> Orbits
+  </label>
+  <label>
+    <input type="checkbox" id="axes" checked> Axes
+  </label>
+</div>
+
+</body>
+</html>
+
